@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block title %}Live Location Sharing | SHEGUARD{% endblock %}
+
+{% block content %}
+
+<div style="margin-bottom: 24px;">
+    <h1 style="font-size: 1.8rem; margin-bottom: 4px;">Live Location Sharing &amp; Safe Radar</h1>
+    <p style="color: var(--text-secondary); font-size: 0.95rem;">
+        View your current coordinates in real-time, generate encrypted shareable map links, and transmit live whereabouts to your trusted contacts.
+    </p>
+</div>
+
+<div class="location-grid">
+
+    <!-- Interactive Leaflet Map View -->
+    <div class="glass-card" style="padding: 0; display: flex; flex-direction: column;">
+        <div class="card-header-flex">
+            <h3 class="card-title">
+                <i class="fas fa-satellite-dish"></i>
+                <span>Live Satellite &amp; Road Positioning</span>
+            </h3>
+            <div style="display: flex; gap: 8px;">
+                <button class="btn btn-sm btn-primary" onclick="requestUserLiveLocation()">
+                    <i class="fas fa-crosshairs"></i> Refresh GPS
+                </button>
+            </div>
+        </div>
+
+        <div class="map-container-card">
+            <div id="leaflet-map"></div>
+            <div class="map-overlay-status">
+                <span class="status-dot"></span>
+                <span id="location-status-text">Detecting GPS Location...</span>
+            </div>
+        </div>
+
+        <div style="padding: 16px 24px; background: var(--bg-secondary); border-top: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <i class="fas fa-map-pin" style="color: var(--primary-pink); font-size: 1.2rem;"></i>
+                <div>
+                    <div style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Approximate Address</div>
+                    <div id="approx-address-box" style="font-size: 0.9rem; color: var(--text-primary); font-weight: 500;">
+                        Acquiring GPS location...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Location Side Control Panel -->
+    <div class="location-side-panel">
+
+        <!-- Coordinates Details Card -->
+        <div class="glass-card" style="padding: 22px;">
+            <h3 style="font-size: 1.15rem; margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
+                <i class="fas fa-location-dot" style="color: var(--primary-purple);"></i>
+                <span>Coordinates Data</span>
+            </h3>
+
+            <div class="coordinates-box">
+                <div class="coord-row">
+                    <span class="coord-label">Latitude:</span>
+                    <span class="coord-val" id="coord-lat">--.------</span>
+                </div>
+                <div class="coord-row">
+                    <span class="coord-label">Longitude:</span>
+                    <span class="coord-val" id="coord-lng">--.------</span>
+                </div>
+                <div class="coord-row">
+                    <span class="coord-label">Accuracy:</span>
+                    <span class="coord-val" id="coord-accuracy" style="color: var(--success-green);">Acquiring...</span>
+                </div>
+                <div class="coord-row" style="margin-bottom: 0;">
+                    <span class="coord-label">Timestamp:</span>
+                    <span class="coord-val" id="coord-timestamp" style="color: var(--text-secondary);">--:--:--</span>
+                </div>
+            </div>
+
+            <!-- Shareable Link Input -->
+            <div class="form-group" style="margin-top: 18px; margin-bottom: 14px;">
+                <label class="form-label">Shareable Google Maps Link:</label>
+                <div style="display: flex; gap: 8px;">
+                    <input type="text" id="shareable-map-link" class="form-input" readonly placeholder="Click Refresh GPS...">
+                    <button class="btn btn-secondary" onclick="copyShareableLink()" title="Copy Link">
+                        <i class="far fa-copy"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Share Action Buttons -->
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                <button class="btn" style="background: #25D366; color: white;" onclick="shareLocationWhatsApp()">
+                    <i class="fab fa-whatsapp"></i> Share on WhatsApp
+                </button>
+                <button class="btn btn-secondary" onclick="shareLocationSms()">
+                    <i class="fas fa-sms"></i> Share via SMS
+                </button>
+            </div>
+        </div>
+
+        <!-- Emergency Safe Points Guide -->
+        <div class="glass-card" style="padding: 20px;">
+            <h4 style="font-size: 1rem; margin-bottom: 10px; display: flex; align-items: center; gap: 8px;">
+                <i class="fas fa-building-shield" style="color: var(--cyan-gradient);"></i>
+                <span>Nearby Safe Havens</span>
+            </h4>
+            <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 12px;">
+                If you feel in danger right now, head immediately towards:
+            </p>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 0.84rem;">
+                <li style="display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-shield-alt" style="color: var(--primary-purple);"></i>
+                    <span>Nearest Police Station or PCR Van</span>
+                </li>
+                <li style="display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-hospital" style="color: var(--sos-red);"></i>
+                    <span>24/7 Hospital Emergency Ward</span>
+                </li>
+                <li style="display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-train-subway" style="color: #60A5FA;"></i>
+                    <span>Metro Station or Busy Transit Hub</span>
+                </li>
+                <li style="display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-store" style="color: var(--warning-amber);"></i>
+                    <span>Illuminated Supermarket / Cafe / Hotel Lobby</span>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

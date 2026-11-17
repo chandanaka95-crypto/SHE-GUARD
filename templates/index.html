@@ -1,0 +1,284 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard | SHEGUARD – AI Women Safety Assistant{% endblock %}
+
+{% block content %}
+
+<!-- Hero Welcome Section -->
+<div class="hero-welcome-banner">
+    <div class="hero-content">
+        <div class="hero-badge">
+            <i class="fas fa-shield-cat"></i>
+            <span>AI PROTECTION ACTIVE &bull; 24/7 RAPID RESPONSE</span>
+        </div>
+        <h1 class="hero-title">SHEGUARD ASSISTANT</h1>
+        <p class="hero-tagline">
+            Your Safety, Your Strength, Your Digital Guardian. Access immediate emergency assistance, AI tactical guidance, verified helplines, and real-time location sharing.
+        </p>
+        <div class="hero-actions">
+            <button class="btn btn-primary" onclick="triggerSosSequence()">
+                <i class="fas fa-triangle-exclamation"></i> Emergency SOS Trigger
+            </button>
+            <a href="{{ url_for('chatbot') }}" class="btn btn-secondary">
+                <i class="fas fa-comment-dots"></i> Speak with Safety AI
+            </a>
+            <a href="{{ url_for('location_page') }}" class="btn btn-secondary">
+                <i class="fas fa-location-arrow"></i> Share Live Location
+            </a>
+        </div>
+    </div>
+    <div class="hero-visual" style="text-align: center; flex-shrink: 0;">
+        <div style="width: 130px; height: 130px; border-radius: 50%; background: var(--brand-gradient); display: flex; align-items: center; justify-content: center; font-size: 4rem; color: white; box-shadow: 0 0 50px rgba(168, 85, 247, 0.5);">
+            <i class="fas fa-shield-heart"></i>
+        </div>
+    </div>
+</div>
+
+<!-- ==========================================
+     PROMINENT EMERGENCY SOS CENTERPIECE
+     ========================================== -->
+<div class="sos-centerpiece-section">
+    <div class="sos-outer-ring">
+        <div class="sos-pulse-wave"></div>
+        <div class="sos-pulse-wave"></div>
+        <div class="sos-pulse-wave"></div>
+        <button class="sos-main-btn" onclick="triggerSosSequence()" title="Press for Immediate Emergency Assistance">
+            <span class="sos-btn-text">SOS</span>
+            <span class="sos-btn-sub">HOLD / TAP</span>
+        </button>
+    </div>
+    <div class="sos-caption">
+        <h3>Press for Instant Emergency Assistance</h3>
+        <p>Acquires GPS coordinates, sends live maps link to trusted contacts via WhatsApp/SMS, and dials national emergency 112.</p>
+    </div>
+</div>
+
+<!-- ==========================================
+     QUICK ACCESS SAFETY FEATURES GRID
+     ========================================== -->
+<h2 style="font-size: 1.4rem; margin-bottom: 18px; display: flex; align-items: center; gap: 10px;">
+    <i class="fas fa-bolt" style="color: var(--primary-purple);"></i>
+    <span>Quick Safety Tools</span>
+</h2>
+
+<div class="features-grid">
+    <!-- Feature 1: AI Chatbot -->
+    <a href="{{ url_for('chatbot') }}" class="feature-card">
+        <div class="feature-icon purple">
+            <i class="fas fa-robot"></i>
+        </div>
+        <div class="feature-title">AI Safety Chatbot</div>
+        <div class="feature-desc">
+            Describe unsafe situations to get calm, step-by-step tactical guidance, escape protocols, and emergency reminders.
+        </div>
+        <div class="feature-action">
+            <span>Ask Safety AI</span> <i class="fas fa-arrow-right"></i>
+        </div>
+    </a>
+
+    <!-- Feature 2: Live Location -->
+    <a href="{{ url_for('location_page') }}" class="feature-card">
+        <div class="feature-icon blue">
+            <i class="fas fa-map-location-dot"></i>
+        </div>
+        <div class="feature-title">Live Location Sharing</div>
+        <div class="feature-desc">
+            View real-time GPS coordinates on an interactive map. Generate 1-click shareable Google Maps links for trusted contacts.
+        </div>
+        <div class="feature-action">
+            <span>Open Map</span> <i class="fas fa-arrow-right"></i>
+        </div>
+    </a>
+
+    <!-- Feature 3: Scam & Threat Detector -->
+    <a href="{{ url_for('scam_detector_page') }}" class="feature-card">
+        <div class="feature-icon pink">
+            <i class="fas fa-shield-virus"></i>
+        </div>
+        <div class="feature-title">Scam &amp; Threat Detector</div>
+        <div class="feature-desc">
+            Scan suspicious texts, extortion messages, stalker threats, and phishing links for AI risk assessment and safety steps.
+        </div>
+        <div class="feature-action">
+            <span>Scan Message</span> <i class="fas fa-arrow-right"></i>
+        </div>
+    </a>
+
+    <!-- Feature 4: Fake Call Simulator -->
+    <a href="{{ url_for('fake_call_page') }}" class="feature-card">
+        <div class="feature-icon red">
+            <i class="fas fa-phone-volume"></i>
+        </div>
+        <div class="feature-title">Fake Call Simulator</div>
+        <div class="feature-desc">
+            Simulate a realistic incoming phone call with ringtone audio to gracefully and safely escape uncomfortable public scenarios.
+        </div>
+        <div class="feature-action">
+            <span>Simulate Call</span> <i class="fas fa-arrow-right"></i>
+        </div>
+    </a>
+
+    <!-- Feature 5: Trusted Contacts -->
+    <a href="{{ url_for('contacts_page') }}" class="feature-card">
+        <div class="feature-icon emerald">
+            <i class="fas fa-user-shield"></i>
+        </div>
+        <div class="feature-title">Trusted Contacts</div>
+        <div class="feature-desc">
+            Manage your priority emergency circle with 1-click calling, instant WhatsApp SOS messages, and SMS dispatch.
+        </div>
+        <div class="feature-action">
+            <span>Manage Contacts</span> <i class="fas fa-arrow-right"></i>
+        </div>
+    </a>
+
+    <!-- Feature 6: Safety Awareness -->
+    <a href="{{ url_for('safety_page') }}" class="feature-card">
+        <div class="feature-icon purple">
+            <i class="fas fa-book-bookmark"></i>
+        </div>
+        <div class="feature-title">Safety Guidelines &amp; Laws</div>
+        <div class="feature-desc">
+            Essential checklists for solo travel, cab safety, digital privacy, Zero FIR legal rights, and crisis helplines.
+        </div>
+        <div class="feature-action">
+            <span>Read Guidelines</span> <i class="fas fa-arrow-right"></i>
+        </div>
+    </a>
+</div>
+
+<!-- ==========================================
+     VERIFIED EMERGENCY HELPLINES (112, 1091, 181)
+     ========================================== -->
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+    <h2 style="font-size: 1.4rem; display: flex; align-items: center; gap: 10px;">
+        <i class="fas fa-phone-rotary" style="color: var(--sos-red);"></i>
+        <span>Emergency Helplines (Direct 24/7 Response)</span>
+    </h2>
+    <span style="font-size: 0.82rem; color: var(--text-muted);">Toll-Free Government Services</span>
+</div>
+
+<div class="helplines-grid">
+    <div class="helpline-card">
+        <div class="helpline-info">
+            <h4>National Emergency</h4>
+            <p>Police, Fire &amp; Medical Emergency</p>
+        </div>
+        <a href="tel:112" class="helpline-number-btn">
+            <i class="fas fa-phone"></i> 112
+        </a>
+    </div>
+
+    <div class="helpline-card">
+        <div class="helpline-info">
+            <h4>Women Helpline</h4>
+            <p>Women Police Assistance Squad</p>
+        </div>
+        <a href="tel:1091" class="helpline-number-btn">
+            <i class="fas fa-phone"></i> 1091
+        </a>
+    </div>
+
+    <div class="helpline-card">
+        <div class="helpline-info">
+            <h4>Women in Distress</h4>
+            <p>Crisis, Domestic Abuse &amp; Shelter</p>
+        </div>
+        <a href="tel:181" class="helpline-number-btn">
+            <i class="fas fa-phone"></i> 181
+        </a>
+    </div>
+
+    <div class="helpline-card">
+        <div class="helpline-info">
+            <h4>Cyber Crime Unit</h4>
+            <p>Online Stalking, Extortion &amp; Fraud</p>
+        </div>
+        <a href="tel:1930" class="helpline-number-btn">
+            <i class="fas fa-phone"></i> 1930
+        </a>
+    </div>
+</div>
+
+<!-- ==========================================
+     TRUSTED CONTACTS PREVIEW & SAFETY TIP
+     ========================================== -->
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 20px;">
+
+    <!-- Trusted Contacts Quick Glance -->
+    <div class="glass-card">
+        <div class="card-header-flex">
+            <h3 class="card-title">
+                <i class="fas fa-users"></i>
+                <span>Trusted Emergency Circle</span>
+            </h3>
+            <a href="{{ url_for('contacts_page') }}" class="btn btn-sm btn-secondary">
+                <i class="fas fa-plus"></i> Add / Edit
+            </a>
+        </div>
+        <div class="card-body">
+            {% if contacts and contacts|length > 0 %}
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                    {% for c in contacts %}
+                    <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: var(--bg-tertiary); border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--brand-gradient); display: flex; align-items: center; justify-content: center; color: white; font-size: 0.9rem;">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div>
+                                <div style="font-weight: 700; font-size: 0.95rem;">
+                                    {{ c.name }}
+                                    {% if c.is_primary %}
+                                    <span style="font-size: 0.68rem; background: rgba(236, 72, 153, 0.2); color: var(--primary-pink); padding: 2px 6px; border-radius: var(--radius-full); margin-left: 6px;">PRIMARY</span>
+                                    {% endif %}
+                                </div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted);">{{ c.relationship or 'Contact' }} &bull; {{ c.phone }}</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 6px;">
+                            <a href="tel:{{ c.phone }}" class="btn btn-sm btn-secondary" title="Call Contact">
+                                <i class="fas fa-phone"></i>
+                            </a>
+                            <a href="https://wa.me/{{ c.phone|replace(' ', '')|replace('+', '') }}" target="_blank" class="btn btn-sm" style="background: #25D366; color: white;" title="Chat on WhatsApp">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p style="color: var(--text-muted); font-size: 0.9rem;">No trusted contacts configured yet.</p>
+                <a href="{{ url_for('contacts_page') }}" class="btn btn-sm btn-primary" style="margin-top: 10px;">
+                    <i class="fas fa-user-plus"></i> Set Up Contacts
+                </a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Daily Safety Tip & Situational Rule -->
+    <div class="glass-card highlight-card">
+        <div class="card-header-flex">
+            <h3 class="card-title">
+                <i class="fas fa-lightbulb" style="color: var(--warning-amber);"></i>
+                <span>Daily Situational Awareness Rule</span>
+            </h3>
+            <span style="font-size: 0.72rem; padding: 4px 10px; border-radius: var(--radius-full); background: rgba(245, 158, 11, 0.2); color: var(--warning-amber); font-weight: 700;">PRO-TIP</span>
+        </div>
+        <div class="card-body">
+            <h4 style="font-size: 1.05rem; margin-bottom: 8px; color: var(--text-primary);">
+                "The 3-Second Scanning Habit"
+            </h4>
+            <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 14px;">
+                Whenever you step out of a vehicle, enter an ATM vestibule, or walk onto a quiet street, pause for 3 seconds. Look left, right, and behind. Keep your chin up and both ears unobstructed. Attackers target people who appear distracted by their smartphones.
+            </p>
+            <div style="display: flex; gap: 10px;">
+                <a href="{{ url_for('safety_page') }}" class="btn btn-sm btn-secondary">
+                    <i class="fas fa-book-open"></i> Explore All Safety Protocols
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

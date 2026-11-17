@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block title %}AI Safety Chatbot | SHEGUARD{% endblock %}
+
+{% block content %}
+
+<div style="margin-bottom: 20px;">
+    <h1 style="font-size: 1.8rem; margin-bottom: 4px;">AI Safety Guardian</h1>
+    <p style="color: var(--text-secondary); font-size: 0.95rem;">
+        Real-time tactical safety guidance powered by Google Gemini AI. Describe your surroundings or concerns to receive calm, step-by-step instructions.
+    </p>
+</div>
+
+<div class="chat-container">
+
+    <!-- Chat Header with Live Agent Status -->
+    <div class="chat-header">
+        <div class="chat-agent-info">
+            <div class="chat-avatar">
+                <i class="fas fa-shield-cat"></i>
+            </div>
+            <div>
+                <div style="font-weight: 700; font-size: 1rem; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+                    <span>SHEGUARD AI ASSISTANT</span>
+                    {% if has_api_key %}
+                    <span style="font-size: 0.7rem; padding: 2px 8px; border-radius: var(--radius-full); background: rgba(16, 185, 129, 0.2); color: var(--success-green); font-weight: 700;">
+                        <i class="fas fa-sparkles"></i> LIVE GEMINI ACTIVE
+                    </span>
+                    {% else %}
+                    <span style="font-size: 0.7rem; padding: 2px 8px; border-radius: var(--radius-full); background: rgba(245, 158, 11, 0.2); color: var(--warning-amber); font-weight: 700;">
+                        <i class="fas fa-shield"></i> SAFE OFFLINE ENGINE
+                    </span>
+                    {% endif %}
+                </div>
+                <div style="font-size: 0.78rem; color: var(--text-muted);">Calm, protective tactical safety protocols &bull; Immediate responses</div>
+            </div>
+        </div>
+
+        <div style="display: flex; gap: 8px;">
+            <button class="btn btn-sm btn-secondary" onclick="clearChatMessages()" title="Clear Chat History">
+                <i class="fas fa-trash-alt"></i> Clear Chat
+            </button>
+            <button class="btn btn-sm btn-outline-danger" onclick="triggerSosSequence()" title="Immediate Emergency SOS">
+                <i class="fas fa-triangle-exclamation"></i> Emergency SOS
+            </button>
+        </div>
+    </div>
+
+    <!-- Prominent Safety Disclaimer Banner -->
+    <div class="chat-disclaimer-banner">
+        <i class="fas fa-circle-exclamation"></i>
+        <div>
+            <strong>CRITICAL SAFETY NOTICE:</strong> SHEGUARD AI provides immediate safety guidance and tactics, but <strong>does NOT dispatch police or emergency services on its own</strong>. If you are in immediate physical danger, dial <strong>112</strong> immediately.
+        </div>
+    </div>
+
+    <!-- Messages Display Area -->
+    <div class="chat-messages-area" id="chat-messages-area">
+        <!-- Initial Welcome Bot Message -->
+        <div class="chat-bubble bot">
+            <div class="chat-avatar" style="width: 38px; height: 38px; font-size: 1rem;">
+                <i class="fas fa-shield-cat"></i>
+            </div>
+            <div style="flex: 1;">
+                <div class="bubble-content">
+                    🌸 <strong>Hello, I am SHEGUARD AI, your personal safety guardian.</strong><br><br>
+                    I am here to help you navigate uncomfortable, threatening, or emergency situations with calm and practical tactical guidance.<br><br>
+                    • What is your current situation?<br>
+                    • Are you alone, in a vehicle, or in a public area?<br>
+                    • Do you need an immediate escape strategy?<br><br>
+                    <em>Tap any of the quick situation prompts below, or type your message.</em>
+                </div>
+                <div class="bubble-meta">
+                    <span>Just now</span>
+                    <div class="bubble-actions">
+                        <button class="bubble-action-btn" title="Listen voice" onclick="speakText(this)"><i class="fas fa-volume-up"></i></button>
+                        <button class="bubble-action-btn" title="Copy text" onclick="copyBubbleText(this)"><i class="far fa-copy"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Prompts Horizontal Scroll -->
+    <div class="chat-prompts-wrapper" id="chat-quick-prompts">
+        <span style="font-size: 0.76rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Quick Scenarios:</span>
+        <button class="prompt-chip" data-prompt="Someone is following me. What should I do right now?">
+            <i class="fas fa-shoe-prints"></i> Someone is following me
+        </button>
+        <button class="prompt-chip" data-prompt="I am travelling alone at night. What safety precautions should I take?">
+            <i class="fas fa-car-side"></i> I am travelling alone
+        </button>
+        <button class="prompt-chip" data-prompt="I need emergency help right now. I feel in danger!">
+            <i class="fas fa-triangle-exclamation" style="color: var(--sos-red);"></i> I need emergency help
+        </button>
+        <button class="prompt-chip" data-prompt="I received a suspicious message or threat online. How should I handle it?">
+            <i class="fas fa-comment-slash"></i> I received a suspicious message
+        </button>
+        <button class="prompt-chip" data-prompt="I feel unsafe in public and someone is making me uncomfortable.">
+            <i class="fas fa-users-slash"></i> I feel unsafe in public
+        </button>
+    </div>
+
+    <!-- Chat Input Bar -->
+    <div class="chat-input-wrapper">
+        <input type="text" id="chat-user-input" class="chat-input-field" placeholder="Describe what is happening right now... (e.g. Someone is walking behind me in an alley)" autocomplete="off">
+        <button id="chat-send-btn" class="chat-send-btn" title="Send Message">
+            <i class="fas fa-paper-plane"></i>
+        </button>
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block title %}Fake Call Simulator | SHEGUARD{% endblock %}
+
+{% block content %}
+
+<div style="margin-bottom: 24px;">
+    <h1 style="font-size: 1.8rem; margin-bottom: 4px;">Fake Call Simulator</h1>
+    <p style="color: var(--text-secondary); font-size: 0.95rem;">
+        Trigger a realistic simulated smartphone incoming call with custom caller ID and authentic ringing tone to gracefully and safely escape uncomfortable public situations.
+    </p>
+</div>
+
+<div class="fake-call-dashboard">
+
+    <div class="glass-card" style="padding: 28px;">
+        <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 20px;">
+            <div style="width: 50px; height: 50px; border-radius: var(--radius-md); background: var(--sos-gradient); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.4rem;">
+                <i class="fas fa-phone-volume"></i>
+            </div>
+            <div>
+                <h3 style="font-size: 1.25rem;">Simulator Configuration</h3>
+                <span style="font-size: 0.8rem; color: var(--text-muted);">Escape Tool &bull; Tactical Exit Protocol</span>
+            </div>
+        </div>
+
+        <!-- Caller ID Selection -->
+        <div class="form-group">
+            <label class="form-label">Caller Name / Label:</label>
+            <input type="text" id="fake-caller-name" class="form-input" value="Mom" placeholder="e.g. Mom, Dad, Police Officer Sharma, Uber Driver">
+            <small style="color: var(--text-muted); font-size: 0.78rem;">Preset options:</small>
+            <div style="display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap;">
+                <button type="button" class="btn btn-sm btn-secondary" onclick="document.getElementById('fake-caller-name').value = 'Mom'">Mom</button>
+                <button type="button" class="btn btn-sm btn-secondary" onclick="document.getElementById('fake-caller-name').value = 'Dad'">Dad</button>
+                <button type="button" class="btn btn-sm btn-secondary" onclick="document.getElementById('fake-caller-name').value = 'Inspector Sharma (Police)'">Police Inspector</button>
+                <button type="button" class="btn btn-sm btn-secondary" onclick="document.getElementById('fake-caller-name').value = 'Cab Driver (Outside)'">Cab Driver</button>
+                <button type="button" class="btn btn-sm btn-secondary" onclick="document.getElementById('fake-caller-name').value = 'Office Boss'">Boss</button>
+            </div>
+        </div>
+
+        <!-- Call Delay Timer -->
+        <div class="form-group" style="margin-top: 18px;">
+            <label class="form-label">Call Delay Timing:</label>
+            <select id="fake-call-delay" class="form-select">
+                <option value="0">Immediate (Ring Right Now)</option>
+                <option value="5">5 Seconds Delay (Quick Excuse)</option>
+                <option value="15">15 Seconds Delay (Step Away Time)</option>
+                <option value="30">30 Seconds Delay (Planned Exit)</option>
+                <option value="60">1 Minute Delay</option>
+            </select>
+        </div>
+
+        <!-- Tactical Escape Guide -->
+        <div style="background: var(--bg-tertiary); padding: 16px; border-radius: var(--radius-md); margin-top: 20px; border: 1px solid var(--border-subtle); font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5;">
+            <strong>How to use this during an uncomfortable interaction:</strong>
+            <p style="margin-top: 6px;">
+                1. Set the caller name to <em>"Mom"</em> or <em>"Cab Driver"</em>.<br>
+                2. Tap <strong>Activate Fake Call</strong>.<br>
+                3. When it rings, answer with: <em>"Hey, yeah! I see your car outside, coming out right now."</em><br>
+                4. Excuse yourself politely and walk toward the well-lit public area.
+            </p>
+        </div>
+
+        <div style="margin-top: 26px;">
+            <button class="btn btn-danger btn-lg" style="width: 100%;" onclick="triggerFakeCall()">
+                <i class="fas fa-phone-arrow-down-left"></i> Activate Fake Call Simulation
+            </button>
+        </div>
+
+        <div style="text-align: center; margin-top: 16px; font-size: 0.78rem; color: var(--text-muted);">
+            *This is an audio &amp; visual simulation tool running in your browser, not an actual telecommunications call.
+        </div>
+    </div>
+
+</div>
+
+<!-- ==========================================
+     FULLSCREEN REALISTIC SMARTPHONE CALL OVERLAY
+     ========================================== -->
+<div id="call-simulator-overlay" class="call-simulator-screen">
+
+    <!-- Top Caller Information -->
+    <div class="call-caller-info">
+        <div class="call-avatar-circle">
+            <i class="fas fa-user"></i>
+        </div>
+        <div class="caller-display-name" id="call-overlay-caller-name">Mom</div>
+        <div class="call-status-label" id="call-overlay-status">Mobile &bull; Incoming Call...</div>
+    </div>
+
+    <!-- Incoming Call State (Accept & Decline Buttons) -->
+    <div id="incoming-call-view" class="call-controls-row">
+        <!-- Decline Call Button -->
+        <div style="text-align: center;">
+            <button class="call-action-circle decline" onclick="declineFakeCall()" title="Decline Call">
+                <i class="fas fa-phone-slash"></i>
+            </button>
+            <div class="call-action-label">Decline</div>
+        </div>
+
+        <!-- Accept Call Button -->
+        <div style="text-align: center;">
+            <button class="call-action-circle accept" onclick="acceptFakeCall()" title="Answer Call">
+                <i class="fas fa-phone"></i>
+            </button>
+            <div class="call-action-label">Accept</div>
+        </div>
+    </div>
+
+    <!-- Active Call State (Connected) -->
+    <div id="active-call-view" class="active-call-view">
+        <div class="call-timer" id="active-call-timer">00:00</div>
+
+        <!-- Simulated Conversation Script / Teleprompter -->
+        <div class="active-call-script-box">
+            <div style="font-weight: 700; color: #10B981; margin-bottom: 6px;">
+                <i class="fas fa-volume-high"></i> Simulated Caller Spoken Line:
+            </div>
+            <p style="font-style: italic;">
+                "Hey! Where are you right now? I'm waiting in the car right outside. Wrap it up and come out, let's head home together!"
+            </p>
+        </div>
+
+        <!-- End Call Button -->
+        <div style="margin-top: 40px; text-align: center;">
+            <button class="call-action-circle decline" onclick="declineFakeCall()" title="End Call">
+                <i class="fas fa-phone-slash"></i>
+            </button>
+            <div class="call-action-label">End Call</div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

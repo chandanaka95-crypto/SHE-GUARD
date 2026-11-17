@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block title %}Suspicious Message &amp; Scam Detector | SHEGUARD{% endblock %}
+
+{% block content %}
+
+<div style="margin-bottom: 24px;">
+    <h1 style="font-size: 1.8rem; margin-bottom: 4px;">AI Suspicious Message &amp; Threat Detector</h1>
+    <p style="color: var(--text-secondary); font-size: 0.95rem;">
+        Paste any suspicious SMS, WhatsApp message, email, or social media DM. SHEGUARD AI analyzes extortion attempts, digital stalking, phishing links, blackmail, and fraud patterns.
+    </p>
+</div>
+
+<div class="scam-analysis-grid">
+
+    <!-- Input Column -->
+    <div class="glass-card" style="padding: 24px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;">
+            <h3 class="card-title">
+                <i class="fas fa-file-shield"></i>
+                <span>Paste Suspicious Text</span>
+            </h3>
+            <span style="font-size: 0.75rem; color: var(--text-muted);">Confidential &bull; Client Analyzed</span>
+        </div>
+
+        <div class="form-group">
+            <textarea id="scam-message-input" class="form-textarea" rows="8" placeholder="Paste the message content here... (e.g. 'Your bank account will be blocked in 2 hours, click this link to update KYC immediately or face police action!')"></textarea>
+        </div>
+
+        <!-- Sample Quick Presets for Demo -->
+        <div>
+            <span style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Instant Test Samples:</span>
+            <div class="sample-messages-box">
+                <button class="sample-chip" data-text="URGENT: Your SBI Bank account has been suspended due to incomplete KYC! Click http://sbi-kyc-verify-portal.apk immediately to update PAN and OTP, otherwise police complaint will be filed within 24 hours.">
+                    <i class="fas fa-landmark"></i> Bank KYC Scam
+                </button>
+                <button class="sample-chip" data-text="I have recorded sensitive webcam videos of you through your phone. Pay 50,000 INR in Bitcoin within 6 hours or I will leak these videos to all your Instagram and WhatsApp contacts!">
+                    <i class="fas fa-skull-crossbones"></i> Cyber Extortion / Threat
+                </button>
+                <button class="sample-chip" data-text="Congratulations! You have been selected for Part-time Work From Home job. Earn Rs. 5000 to 10,000 daily by simply liking YouTube videos. Deposit 500 registration fee to begin right now.">
+                    <i class="fas fa-briefcase"></i> Fake Job Offer
+                </button>
+                <button class="sample-chip" data-text="Hey Maya, are we still meeting for lunch tomorrow at 1:30 PM near the bookstore? Let me know!">
+                    <i class="fas fa-check"></i> Safe Genuine Text
+                </button>
+            </div>
+        </div>
+
+        <div style="margin-top: 24px;">
+            <button id="btn-analyze-scam" class="btn btn-primary" style="width: 100%;">
+                <i class="fas fa-shield-virus"></i> Run AI Security Scan
+            </button>
+        </div>
+
+        <!-- Safety Advice Note -->
+        <div style="margin-top: 18px; padding: 12px; background: rgba(239, 68, 68, 0.08); border-left: 3px solid var(--sos-red); border-radius: 4px; font-size: 0.82rem; color: var(--text-secondary);">
+            <strong>Cyber Tip:</strong> Never share One-Time Passwords (OTPs), UPI PINs, or bank passwords with anyone. Legitimate banks and police officers never request passwords over SMS or phone calls.
+        </div>
+    </div>
+
+    <!-- Output Analysis Column -->
+    <div id="scam-results-view" class="glass-card" style="padding: 24px; display: none;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+            <h3 class="card-title">
+                <i class="fas fa-microscope" style="color: var(--primary-pink);"></i>
+                <span>Threat Intelligence Report</span>
+            </h3>
+            <div id="result-ai-engine-badge" style="font-size: 0.78rem; font-weight: 600;"></div>
+        </div>
+
+        <!-- Risk Score Gauge Box -->
+        <div class="risk-meter-container">
+            <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">
+                Calculated Risk Score
+            </div>
+            <div id="result-risk-score" class="risk-score-display" style="color: var(--sos-red);">--%</div>
+            <div>
+                <span id="result-risk-badge" class="risk-level-badge Safe">Evaluating...</span>
+            </div>
+            <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 10px;">
+                Identified Category: <strong id="result-threat-type" style="color: var(--text-primary);">--</strong>
+            </div>
+        </div>
+
+        <!-- Executive Summary -->
+        <div style="margin-bottom: 18px;">
+            <h4 style="font-size: 0.95rem; margin-bottom: 6px; color: var(--text-primary);">AI Assessment Summary:</h4>
+            <p id="result-summary-text" style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5; background: var(--bg-tertiary); padding: 12px; border-radius: var(--radius-md);">
+                --
+            </p>
+        </div>
+
+        <!-- Detected Red Flags List -->
+        <div style="margin-bottom: 18px;">
+            <h4 style="font-size: 0.95rem; margin-bottom: 6px; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+                <i class="fas fa-flag" style="color: var(--sos-red);"></i>
+                <span>Identified Threat Indicators &amp; Red Flags:</span>
+            </h4>
+            <ul id="result-red-flags-list" class="red-flags-list"></ul>
+        </div>
+
+        <!-- Actionable Recommendations -->
+        <div style="margin-bottom: 18px;">
+            <h4 style="font-size: 0.95rem; margin-bottom: 6px; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+                <i class="fas fa-shield-check" style="color: var(--success-green);"></i>
+                <span>Immediate Protective Actions:</span>
+            </h4>
+            <ul id="result-actions-list" style="list-style: none; font-size: 0.88rem; color: var(--text-secondary);"></ul>
+        </div>
+
+        <!-- Critical Disclaimer -->
+        <div style="font-size: 0.78rem; color: var(--text-muted); border-top: 1px solid var(--border-subtle); padding-top: 12px; line-height: 1.4;">
+            <em>Disclaimer: SheGuard AI threat evaluation is advisory and cannot guarantee 100% absence of risk. If a message contains explicit physical threats or extortion, report it immediately to the National Cyber Crime Portal or dial <strong>1930</strong>.</em>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
